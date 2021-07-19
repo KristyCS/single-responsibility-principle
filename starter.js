@@ -30,19 +30,28 @@ const recipes = {
   cherryPie: cherryPieRecipe
 };
 
+let counter = {
+  applePie: 0,
+  pumpkinPie: 0,
+  cherryPie: 0
+}
 
-function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
-  let revenue = 0;
-  let totalCost = 0;
-
+function bakePies(pieType, pieQuantity) {
   const ingredients = recipes[pieType];
   for (let i = 0; i < pieQuantity; i++) {
+    counter[pieType]++;
     let combiningMsg = `Combining ingredients for ${pieType}: `
     ingredients.forEach(ingredient => combiningMsg += ingredient.name + ", ")
     console.log(combiningMsg)
     console.log(`Baked pie ${i + 1}! `)
   }
+  console.log(counter);
+}
 
+function sellPies(pieType, pieQuantity, profitMargin) {
+  let revenue = 0;
+  let totalCost = 0;
+  const ingredients = recipes[pieType];
   const costOfPie = ingredients.reduce((prev, current) => {
     return prev + current.cost;
   }, ingredients[0].cost);
@@ -54,6 +63,35 @@ function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
 }
 
 
-bakeAndSellPies("applePie", 5, 2.5)
-bakeAndSellPies("pumpkinPie", 2)
-bakeAndSellPies("cherryPie", 7, 1.7)
+
+
+
+
+
+
+bakePies("cherryPie", 7);
+// sellPies("cherryPie", 7, 2.5);
+// bakeAndSellPies("applePie", 5, 2.5)
+// bakeAndSellPies("pumpkinPie", 2)
+// bakeAndSellPies("cherryPie", 7, 1.7)
+function bakeAndSellPies(pieType, pieQuantity, profitMargin) {
+  let revenue = 0;
+  let totalCost = 0;
+
+  // const ingredients = recipes[pieType];
+  // for (let i = 0; i < pieQuantity; i++) {
+  //   let combiningMsg = `Combining ingredients for ${pieType}: `
+  //   ingredients.forEach(ingredient => combiningMsg += ingredient.name + ", ")
+  //   console.log(combiningMsg)
+  //   console.log(`Baked pie ${i + 1}! `)
+  // }
+
+  const costOfPie = ingredients.reduce((prev, current) => {
+    return prev + current.cost;
+  }, ingredients[0].cost);
+  console.log(`Cost per pie: ${costOfPie}`)
+  totalCost = costOfPie * pieQuantity;
+
+  revenue += totalCost * profitMargin;
+  console.log(`Sold ${pieQuantity} pies for $${revenue.toFixed(2)}`)
+}
